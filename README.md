@@ -7,7 +7,7 @@ This is the sample react file structure template for myself.
 - React Router
 - Material Table & React Table
 - Axios
-- React Chartjs 2
+- React Chartjs 2 (with zoom plugin)
 - React Hook Form
 
 ## Project Information

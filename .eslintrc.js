@@ -15,7 +15,7 @@ module.exports = {
 	plugins: ['react'],
 	rules: {
 		indent: ['error', 'tab', { SwitchCase: 1 }],
-		'linebreak-style': ['error', 'windows'],
+		'linebreak-style': ['error', 'unix'],
 		quotes: ['error', 'single'],
 		semi: ['error', 'always'],
 		'react/display-name': ['off'],
