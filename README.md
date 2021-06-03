@@ -20,7 +20,7 @@ This project was created using [Create React App](https://create-react-app.dev/)
 2. Run npm install
 3. Run npm start
 
-**_To create a production bundle, run `npm run build`_**
+**_To create a production bundle, run `npm run build`_**\
 **_To run production in local, run `serve -s build` and `npm install -g serve` if you don't have serve_**
 
 ## Todo
