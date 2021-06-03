@@ -182,7 +182,7 @@ export default function Dashboard() {
 					<Card>
 						<Card.Header>
 							<Card.Title as="h4">Bar Chart</Card.Title>
-							<p className="card-category">Stacked with zoom</p>
+							<p className="card-category">Stacked with zoom plugin enabled (scroll or swipe to test)</p>
 						</Card.Header>
 						<Card.Body>
 							<Bar
