@@ -28,6 +28,7 @@ This project was created using [Create React App](https://create-react-app.dev/)
 - `Cookie thing check token and update refresh token`
 - `cookie show modal before timeout`
 - `logout sometimes will auto login again`
+- `Failed to decode downloaded font: && OTS parsing error: invalid sfntVersion: 1008821359`
 - `More lazy loading?`
 
 Feel free to contact me at chern-97@hotmail.com
