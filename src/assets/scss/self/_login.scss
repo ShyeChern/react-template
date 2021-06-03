@@ -1,0 +1,20 @@
+$loginBackground: url('../../img/background.jpg');
+
+.login-background {
+  background-image: $loginBackground;
+  // Center and scale the image nicely 
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  // to remove white space at top
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.login-form {
+  margin-top: 50px;
+  padding-bottom: 40px;
+}

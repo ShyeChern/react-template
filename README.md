@@ -1,37 +1,33 @@
 # React Template
-This is the sample react file structure template for myself. 
 
-## Sample code included following package
+This is the sample react file structure template for myself.
+
+## Sample code including but not limited to the following package
+
 - React Router
-- Material Table / react table? 
+- Material Table & React Table
 - Axios
+- React Chartjs 2
+- React Hook Form
+
+## Project Information
+
+This project was created using [Create React App](https://create-react-app.dev/) with the css template [Creative Tim Demo](https://demos.creative-tim.com/light-bootstrap-dashboard-react/?_ga=2.235697025.1894030771.1619926308-1426218325.1619926308#/documentation/getting-started)
 
 ## Installation
+
 1. Clone this repo
 2. Run npm install
-3. Change your .env variable
-4. Setup Database by running npx knex migrate:latest (Windows), knex migrate:latest (Mac)
-3. Run npx knex seed:run (Windows), knex seed:run (Mac)
-3. Run npm start ***(nodemon index.js / node index.js)***
+3. Run npm start
 
-## Getting Started with Create React App
-
-This project was created using [Create React App](https://create-react-app.dev/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-npm run build to minify
+**_To create a production bundle, run `npm run build`_**
+**_To run production in local, run `serve -s build` and `npm install -g serve` if you don't have serve_**
 
 ## Todo
-- `Lazy loading in router`
-- `Form data api call`
-- `Cookie thing`
-- `react table`
+
+- `Cookie thing check token and update refresh token`
+- `cookie show modal before timeout`
+- `logout sometimes will auto login again`
+- `More lazy loading?`
 
 Feel free to contact me at chern-97@hotmail.com
