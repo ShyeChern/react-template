@@ -1,7 +1,6 @@
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 const apiBaseURL = process.env.REACT_APP_BASE_URL;
-console.log(apiBaseURL);
 let cookie;
 if (process.env.NODE_ENV === 'production') {
 	cookie = new Cookies().get('_appLogin');
