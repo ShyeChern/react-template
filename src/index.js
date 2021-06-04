@@ -3,9 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 // css assets
-import './assets/css/animate.min.css';
-import './assets/scss/light-bootstrap-dashboard-react.scss?v=2.0.0';
-import './assets/css/demo.css';
+import 'assets/scss/light-bootstrap-dashboard-react.scss';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 // Custom Error boundary for whole app and ui
 import { ErrorBoundary } from 'react-error-boundary';
