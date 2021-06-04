@@ -9,11 +9,11 @@ License - nucleoapp.com/license/
 	src: url('~assets/fonts/nucleo-icons.eot');
 	//   src: url('~assets/fonts/nucleo-icons.eot') format('embedded-opentype'), url('~assets/fonts/nucleo-icons.woff2') format('woff2'), url('~assets/fonts/nucleo-icons.woff') format('woff'), url('~assets/fonts/nucleo-icons.ttf') format('truetype'), url('~assets/fonts/nucleo-icons.svg') format('svg');
 	//wolf2 Fail to decode && OTS parsing error
-	src: url('~assets/fonts/nucleo-icons.woff2') format('woff2');
-	// url('~assets/fonts/nucleo-icons.eot') format('embedded-opentype'),
-	// 	url('~assets/fonts/nucleo-icons.woff') format('woff'),
-	// 	url('~assets/fonts/nucleo-icons.ttf') format('truetype'),
-	// 	url('~assets/fonts/nucleo-icons.svg') format('svg');
+	src: url('~assets/fonts/nucleo-icons.eot') format('embedded-opentype'),
+		url('~assets/fonts/nucleo-icons.woff2') format('woff2'),
+		url('~assets/fonts/nucleo-icons.woff') format('woff'),
+		url('~assets/fonts/nucleo-icons.ttf') format('truetype'),
+		url('~assets/fonts/nucleo-icons.svg') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
