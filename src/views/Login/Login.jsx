@@ -26,7 +26,7 @@ export default function Login() {
 				window.location.pathname = 'admin';
 			}, 500);
 		} else {
-			setError('Login again');
+			setError('50% chance login');
 			return false;
 		}
 	};
