@@ -5,6 +5,7 @@ import { appInitialState, appReducer, appContext } from 'components/hooks/app';
 import CombinedContext from 'components/CombinedContext.jsx';
 import AdminRoute from 'components/route/AdminRoute';
 import PrivateRoute from 'components/route/PrivateRoute';
+import { CONSTANT } from 'utils/constant';
 import { routes, adminRoutes, sidebarRoutes } from 'routes';
 
 export default function App() {
@@ -16,7 +17,7 @@ export default function App() {
 
 	const cookies = new Cookies();
 
-	const appCookie = cookies.get('_appLogin');
+	const appCookie = cookies.get(CONSTANT.APP);
 
 	useEffect(() => {
 		async function validateCookie() {
@@ -25,7 +26,7 @@ export default function App() {
 			if (result) {
 				dispatchApp({ type: 'SET_LOGIN', isLogin: true });
 			} else {
-				cookies.remove('_appLogin');
+				cookies.remove(CONSTANT.APP);
 				window.location.pathname = '/';
 			}
 		}
@@ -35,7 +36,7 @@ export default function App() {
 	}, [appState.isLogin]);
 
 	const logout = () => {
-		cookies.remove('_appLogin');
+		cookies.remove(CONSTANT.APP);
 		dispatchApp({ type: 'SET_LOGIN', isLogin: false });
 		window.location.pathname = '/';
 	};

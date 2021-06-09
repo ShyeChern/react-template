@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { appContext } from 'components/hooks/app';
 import { InputGroup, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
+import { CONSTANT } from 'utils/constant';
 import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
@@ -22,7 +23,7 @@ export default function Login() {
 			setTimeout(() => {
 				dispatchApp({ type: 'SET_LOADING', isLoading: false });
 				// max age in second
-				cookies.set('_appLogin', 'somedata', { maxAge: 7200 });
+				cookies.set(CONSTANT.APP, 'somedata', { maxAge: 7200 });
 				window.location.pathname = 'admin';
 			}, 500);
 		} else {
@@ -32,7 +33,7 @@ export default function Login() {
 	};
 
 	useEffect(() => {
-		const appCookie = cookies.get('_appLogin');
+		const appCookie = cookies.get(CONSTANT.APP);
 		if (appCookie) {
 			dispatchApp({ type: 'SET_LOADING', isLoading: true });
 			window.location.pathname = 'admin';

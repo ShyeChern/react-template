@@ -1,6 +1,6 @@
 # React Template
 
-This is the sample react file structure template for myself.
+This is the sample react file structure template for myself. It contains some code for me to refer when needed.
 
 ## Sample code including but not limited to the following package
 
@@ -26,9 +26,9 @@ This project was created using [Create React App](https://create-react-app.dev/)
 ## Todo
 
 - `Cookie thing check token and update refresh token`
-- `cookie show modal before timeout`
+- `cookie show modal before cookie timeout`
+- `cookie rename into 128 bit string and put in constant`
 - `logout sometimes will auto login again`
-- `Failed to decode downloaded font: && OTS parsing error: invalid sfntVersion: 1008821359`
 - `More lazy loading?`
 
 Feel free to contact me at chern-97@hotmail.com

@@ -1,9 +1,10 @@
 import axios from 'axios';
+import { CONSTANT } from 'utils/constant';
 import Cookies from 'universal-cookie';
 const apiBaseURL = process.env.REACT_APP_BASE_URL;
 let cookie;
 if (process.env.NODE_ENV === 'production') {
-	cookie = new Cookies().get('_appLogin');
+	cookie = new Cookies().get(CONSTANT.APP);
 } else {
 	cookie =
 		'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTYxOTI1MjU0M30.uqqRy06zb2DYimhsqpf8UsJneoyRhhSmPZzthvU2P2I';
