@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { appContext } from 'components/hooks/app';
 import { InputGroup, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { CONSTANT } from 'utils/constant';
+import { constant } from 'utils/constant';
 import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
@@ -17,13 +17,12 @@ export default function Login() {
 
 	const login = (data) => {
 		if (Math.random() < 0.5) {
-			dispatchApp({ type: 'SET_LOADING', isLoading: true });
 			// send data to server side
 			console.log(data);
 			setTimeout(() => {
-				dispatchApp({ type: 'SET_LOADING', isLoading: false });
+				dispatchApp({ type: constant.SET_LOADING, isLoading: true });
 				// max age in second
-				cookies.set(CONSTANT.APP, 'somedata', { maxAge: 7200 });
+				cookies.set(constant.APP, 'somedata', { maxAge: 7200 });
 				window.location.pathname = 'admin';
 			}, 500);
 		} else {
@@ -33,9 +32,9 @@ export default function Login() {
 	};
 
 	useEffect(() => {
-		const appCookie = cookies.get(CONSTANT.APP);
+		const appCookie = cookies.get(constant.APP);
 		if (appCookie) {
-			dispatchApp({ type: 'SET_LOADING', isLoading: true });
+			dispatchApp({ type: constant.SET_LOADING, isLoading: true });
 			window.location.pathname = 'admin';
 		}
 	}, []);

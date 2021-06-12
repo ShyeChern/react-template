@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
 import { Navbar, Container, Nav, Dropdown, Button } from 'react-bootstrap';
 import { appContext } from 'components/hooks/app';
+import { adminRoutes } from 'routes';
+import { constant } from 'utils/constant';
 
-export default function TopNav({ routes, logout, loading }) {
+export default function TopNav({ logout }) {
 	const { pathname } = useLocation();
-	const { appState } = useContext(appContext);
+	const { appState, dispatchApp } = useContext(appContext);
 
 	/**
 	 * Toggle the sidebar and create a div in body
@@ -25,8 +27,15 @@ export default function TopNav({ routes, logout, loading }) {
 	};
 
 	const getBrandText = () => {
-		const index = routes.findIndex((value) => pathname === value.path);
-		return index !== -1 ? routes[index].name : 'Shye Chern';
+		const index = adminRoutes.findIndex((value) => pathname === value.path);
+		return index !== -1 ? adminRoutes[index].name : 'Shye Chern';
+	};
+
+	const loading = () => {
+		dispatchApp({ type: constant.SET_LOADING, isLoading: true });
+		setTimeout(() => {
+			dispatchApp({ type: constant.SET_LOADING, isLoading: false });
+		}, 3000);
 	};
 
 	/**
@@ -116,7 +125,5 @@ export default function TopNav({ routes, logout, loading }) {
 }
 
 TopNav.propTypes = {
-	routes: PropTypes.array,
 	logout: PropTypes.func,
-	loading: PropTypes.func,
 };

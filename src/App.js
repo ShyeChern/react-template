@@ -5,8 +5,10 @@ import { appInitialState, appReducer, appContext } from 'components/hooks/app';
 import CombinedContext from 'components/CombinedContext.jsx';
 import AdminRoute from 'components/route/AdminRoute';
 import PrivateRoute from 'components/route/PrivateRoute';
-import { CONSTANT } from 'utils/constant';
-import { routes, adminRoutes, sidebarRoutes } from 'routes';
+import { constant } from 'utils/constant';
+import { routes } from 'routes';
+
+const cookies = new Cookies();
 
 export default function App() {
 	const [appState, dispatchApp] = useReducer(appReducer, appInitialState);
@@ -15,37 +17,31 @@ export default function App() {
 		return { appState, dispatchApp };
 	}, [appState, dispatchApp]);
 
-	const cookies = new Cookies();
-
-	const appCookie = cookies.get(CONSTANT.APP);
-
 	useEffect(() => {
-		async function validateCookie() {
-			// validate cookie from server side, can update refresh token here
-			let result = true;
-			if (result) {
-				dispatchApp({ type: 'SET_LOGIN', isLogin: true });
-			} else {
-				cookies.remove(CONSTANT.APP);
-				window.location.pathname = '/';
-			}
-		}
-		if (appCookie) {
-			validateCookie();
-		}
+		validateCookie();
 	}, [appState.isLogin]);
 
-	const logout = () => {
-		cookies.remove(CONSTANT.APP);
-		dispatchApp({ type: 'SET_LOGIN', isLogin: false });
-		window.location.pathname = '/';
+	const validateCookie = async () => {
+		const appCookie = cookies.get(constant.APP);
+		if (appCookie) {
+			// validate cookie from server side
+			let result = true;
+			if (result) {
+				dispatchApp({ type: constant.SET_LOGIN, isLogin: true });
+			} else {
+				cookies.remove(constant.APP);
+				window.location.pathname = '/';
+			}
+			return result;
+		} else {
+			return false;
+		}
 	};
 
-	const loading = () => {
-		dispatchApp({ type: 'SET_LOADING', isLoading: true });
-		setTimeout(() => {
-			dispatchApp({ type: 'SET_LOADING', isLoading: false });
-		}, 3000);
+	const logout = () => {
+		cookies.remove(constant.APP);
+		dispatchApp({ type: constant.SET_LOGIN, isLogin: false });
+		window.location.pathname = '/';
 	};
 
 	return (
@@ -57,20 +53,20 @@ export default function App() {
 						{/* Normal Route */}
 						{routes.map((value, index) => {
 							return value.private ? (
-								<PrivateRoute exact path={value.path} component={value.component} key={index} />
+								<PrivateRoute
+									exact
+									path={value.path}
+									component={value.component}
+									key={index}
+									validateCookie={validateCookie}
+								/>
 							) : (
 								<Route exact path={value.path} component={value.component} key={index} />
 							);
 						})}
 						{/* Admin Route with TopNav and Sidebar*/}
 						<Route path="/admin">
-							<AdminRoute
-								adminRoutes={adminRoutes}
-								sidebarRoutes={sidebarRoutes}
-								appState={appState}
-								logout={logout}
-								loading={loading}
-							/>
+							<AdminRoute logout={logout} validateCookie={validateCookie} />
 						</Route>
 						{/* capture invalid route */}
 						<Route render={() => <Redirect to={{ pathname: '/404' }} />} />

@@ -3,6 +3,8 @@
 ### Misc
 * Remove unused css file
 * Move constant variable into utils/constant.js
+* Validate private route from backend
+* Refactor code
 
 ## v1.0.1 (2021-06-03)
 ### Fix

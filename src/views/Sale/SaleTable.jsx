@@ -5,7 +5,8 @@ import DeleteModal from 'components/modal/DeleteModal';
 import Notification, { useNoti } from 'components/notification/Notification';
 import SaleModal from 'views/Sale/SaleModal';
 import { GET, POST } from 'utils/api';
-import { convertFormData } from 'utils/convert';
+import { convertFormData } from 'utils/function';
+import { constant } from 'utils/constant';
 
 export default function SaleTable() {
 	const { dispatchApp } = useContext(appContext);
@@ -64,7 +65,7 @@ export default function SaleTable() {
 
 	const addSale = async (data, reset) => {
 		if (Math.random() < 0.5) {
-			dispatchApp({ type: 'SET_LOADING', isLoading: true });
+			dispatchApp({ type: constant.SET_LOADING, isLoading: true });
 
 			let saleData = {
 				userId: Math.floor(Math.random() * 10),
@@ -85,7 +86,7 @@ export default function SaleTable() {
 				.catch((err) => setError(err.message));
 
 			// move to api call if backend available
-			dispatchApp({ type: 'SET_LOADING', isLoading: false });
+			dispatchApp({ type: constant.SET_LOADING, isLoading: false });
 			reset();
 			setError('');
 			setShowAddModal(false);
@@ -204,7 +205,7 @@ export default function SaleTable() {
 				title={'Delete Sale'}
 				description={`Confirm to delete sale ${selectedSale.id}?`}
 			/>
-			<CustomMaterialTable data={data} columns={columns} actions={actions} />
+			<CustomMaterialTable data={data} title={'Sale'} columns={columns} actions={actions} />
 		</>
 	);
 }

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { useLocation, NavLink } from 'react-router-dom';
 import { Nav, Collapse } from 'react-bootstrap';
+import { sidebarRoutes } from 'routes';
 import image from 'assets/img/sidebar.jpg';
 
-export default function Sidebar({ routes }) {
+export default function Sidebar() {
 	const [collapseMenu, setCollapseMenu] = useState('');
 	const location = useLocation();
 	const activeRoute = (path) => {
@@ -12,7 +12,7 @@ export default function Sidebar({ routes }) {
 	};
 
 	const activeMenu = (index) => {
-		return routes[index].child.some((value) => value.path === location.pathname)
+		return sidebarRoutes[index].child.some((value) => value.path === location.pathname)
 			? 'active-menu nav-link'
 			: 'nav-link';
 	};
@@ -34,7 +34,7 @@ export default function Sidebar({ routes }) {
 					<span className="simple-text">Shye Chern</span>
 				</div>
 				<Nav>
-					{routes.map((value, index) => {
+					{sidebarRoutes.map((value, index) => {
 						if (value.expandable) {
 							return (
 								<li key={index}>
@@ -80,7 +80,3 @@ export default function Sidebar({ routes }) {
 		</div>
 	);
 }
-
-Sidebar.propTypes = {
-	routes: PropTypes.array,
-};

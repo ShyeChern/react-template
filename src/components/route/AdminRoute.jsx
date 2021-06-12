@@ -1,22 +1,31 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import PrivateRoute from 'components/route/PrivateRoute';
 import Sidebar from 'components/nav/Sidebar';
 import TopNav from 'components/nav/TopNav';
+import { adminRoutes } from 'routes';
+import { appContext } from 'components/hooks/app';
 import PropTypes from 'prop-types';
 
-export default function AdminRoute({ adminRoutes, sidebarRoutes, appState, logout, loading }) {
+export default function AdminRoute({ validateCookie, logout }) {
+	const { appState } = useContext(appContext);
 	return (
 		<div className="wrapper">
-			<Sidebar routes={sidebarRoutes} />
+			<Sidebar />
 			<div className="main-panel">
-				<TopNav routes={adminRoutes} logout={logout} loading={loading} />
+				<TopNav logout={logout} />
 				<div className="content">
 					{appState.isLoading ? <div className="loader" /> : null}
 					<Switch>
 						{adminRoutes.map((value, index) => {
 							return value.private ? (
-								<PrivateRoute exact path={value.path} component={value.component} key={index} />
+								<PrivateRoute
+									exact
+									path={value.path}
+									component={value.component}
+									key={index}
+									validateCookie={validateCookie}
+								/>
 							) : (
 								<Route exact path={value.path} component={value.component} key={index} />
 							);
@@ -31,9 +40,6 @@ export default function AdminRoute({ adminRoutes, sidebarRoutes, appState, logou
 }
 
 AdminRoute.propTypes = {
-	adminRoutes: PropTypes.array,
-	sidebarRoutes: PropTypes.array,
-	appState: PropTypes.object,
+	validateCookie: PropTypes.func,
 	logout: PropTypes.func,
-	loading: PropTypes.func,
 };

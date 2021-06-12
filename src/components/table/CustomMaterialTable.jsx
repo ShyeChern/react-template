@@ -12,7 +12,7 @@ import MaterialTable, { MTableToolbar } from 'material-table';
  * @returns Material Table
  */
 
-export default function CustomMaterialTable({ columns, actions, data, options = {} }) {
+export default function CustomMaterialTable({ title, columns, actions, data, options = {} }) {
 	const useStyles = makeStyles({
 		root: {
 			'@media (max-width: 768px)': {
@@ -24,7 +24,7 @@ export default function CustomMaterialTable({ columns, actions, data, options = 
 	return (
 		<>
 			<MaterialTable
-				title="Sales"
+				title={title}
 				actions={actions}
 				columns={columns}
 				components={{
@@ -47,6 +47,7 @@ export default function CustomMaterialTable({ columns, actions, data, options = 
 }
 
 CustomMaterialTable.propTypes = {
+	title: PropTypes.string,
 	columns: PropTypes.array,
 	actions: PropTypes.array,
 	data: PropTypes.array,

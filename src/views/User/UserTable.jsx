@@ -5,6 +5,7 @@ import EditUserModal from 'views/User/EditUserModal';
 import CustomReactTable from 'components/table/CustomReactTable';
 import DeleteModal from 'components/modal/DeleteModal';
 import Notification, { useNoti } from 'components/notification/Notification';
+import { constant } from 'utils/constant';
 
 export default function UserTable() {
 	const { dispatchApp } = useContext(appContext);
@@ -73,8 +74,8 @@ export default function UserTable() {
 	const editUser = (data, reset) => {
 		if (Math.random() < 0.5) {
 			console.log(data);
-			dispatchApp({ type: 'SET_LOADING', isLoading: true });
-			dispatchApp({ type: 'SET_LOADING', isLoading: false });
+			dispatchApp({ type: constant.SET_LOADING, isLoading: true });
+			dispatchApp({ type: constant.SET_LOADING, isLoading: false });
 			reset();
 			setError('');
 			setShowEditModal(false);

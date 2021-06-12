@@ -1,4 +1,5 @@
 import { createContext } from 'react';
+import { constant } from 'utils/constant';
 
 /**
  * Create global context
@@ -11,9 +12,9 @@ export const appInitialState = {
 
 export const appReducer = (prevState, action) => {
 	switch (action.type) {
-		case 'SET_LOADING':
+		case constant.SET_LOADING:
 			return { ...prevState, isLoading: action.isLoading };
-		case 'SET_LOGIN':
+		case constant.SET_LOGIN:
 			return { ...prevState, isLogin: action.isLogin };
 		default:
 			throw new Error('Invalid app action');

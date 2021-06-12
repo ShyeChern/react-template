@@ -27,7 +27,6 @@ This project was created using [Create React App](https://create-react-app.dev/)
 
 - `Cookie thing check token and update refresh token`
 - `cookie show modal before cookie timeout`
-- `cookie rename into 128 bit string and put in constant`
 - `logout sometimes will auto login again`
 - `More lazy loading?`
 
