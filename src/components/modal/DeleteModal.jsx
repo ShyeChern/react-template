@@ -34,9 +34,9 @@ export default function DeleteModal({ show, setShow, title, description, deleteF
 }
 
 DeleteModal.propTypes = {
-	show: PropTypes.bool,
-	setShow: PropTypes.func,
-	title: PropTypes.string,
-	description: PropTypes.string,
-	deleteFunction: PropTypes.func,
+	show: PropTypes.bool.isRequired,
+	setShow: PropTypes.func.isRequired,
+	title: PropTypes.string.isRequired,
+	description: PropTypes.string.isRequired,
+	deleteFunction: PropTypes.func.isRequired,
 };

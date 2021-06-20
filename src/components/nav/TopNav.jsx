@@ -109,13 +109,13 @@ export default function TopNav({ logout }) {
 									<Dropdown.Item onClick={(e) => e.preventDefault()}>Another action</Dropdown.Item>
 								</Dropdown.Menu>
 							</Dropdown>
-							{appState.isLogin ? (
+							{appState.isLogin && (
 								<Nav.Item>
 									<Nav.Link className="m-0" onClick={() => logout()}>
 										<span>Log out</span>
 									</Nav.Link>
 								</Nav.Item>
-							) : null}
+							)}
 						</Nav>
 					</Navbar.Collapse>
 				</Container>
@@ -125,5 +125,5 @@ export default function TopNav({ logout }) {
 }
 
 TopNav.propTypes = {
-	logout: PropTypes.func,
+	logout: PropTypes.func.isRequired,
 };

@@ -47,9 +47,9 @@ export default function CustomMaterialTable({ title, columns, actions, data, opt
 }
 
 CustomMaterialTable.propTypes = {
-	title: PropTypes.string,
-	columns: PropTypes.array,
-	actions: PropTypes.array,
-	data: PropTypes.array,
+	title: PropTypes.string.isRequired,
+	columns: PropTypes.array.isRequired,
+	actions: PropTypes.array.isRequired,
+	data: PropTypes.array.isRequired,
 	options: PropTypes.object,
 };

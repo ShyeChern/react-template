@@ -31,8 +31,9 @@ export default function Login() {
 		}
 	};
 
-	useEffect(() => {
+	useEffect(async () => {
 		const appCookie = cookies.get(constant.APP);
+
 		if (appCookie) {
 			dispatchApp({ type: constant.SET_LOADING, isLoading: true });
 			window.location.pathname = 'admin';
@@ -41,7 +42,7 @@ export default function Login() {
 
 	return (
 		<div className="login-background">
-			{appState.isLoading ? <div className="loader" /> : null}
+			{appState.isLoading && <div className="loader" />}
 			<div className="container">
 				<div className="d-flex justify-content-center">
 					<Form className="login-form card col-md-4" onSubmit={handleSubmit(login)}>

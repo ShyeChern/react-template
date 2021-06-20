@@ -8,8 +8,8 @@ export default function PrivateRoute({ component: Component, validateCookie, ...
 
 	useEffect(() => {
 		async function checkCookie() {
-			let con = await validateCookie();
-			setValid(con);
+			let result = await validateCookie();
+			setValid(result);
 			setIsLoading(false);
 		}
 		checkCookie();
@@ -23,6 +23,6 @@ export default function PrivateRoute({ component: Component, validateCookie, ...
 }
 
 PrivateRoute.propTypes = {
-	validateCookie: PropTypes.func,
-	component: PropTypes.object,
+	validateCookie: PropTypes.func.isRequired,
+	component: PropTypes.object.isRequired,
 };

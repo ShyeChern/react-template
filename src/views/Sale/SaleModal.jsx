@@ -40,7 +40,7 @@ export default function SaleModal({ title, show, setShow, submit, error, sale = 
 					<Modal.Title className="m-0">{title}</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					{error ? <p className="text-danger">{error}</p> : null}
+					{error && <p className="text-danger">{error}</p>}
 					<div className="row">
 						<Form.Group as={Col} md={6} controlId="packageName">
 							<Form.Label>Package Name</Form.Label>
@@ -136,10 +136,10 @@ export default function SaleModal({ title, show, setShow, submit, error, sale = 
 }
 
 SaleModal.propTypes = {
-	title: PropTypes.string,
-	show: PropTypes.bool,
-	setShow: PropTypes.func,
-	submit: PropTypes.func,
-	error: PropTypes.string,
+	title: PropTypes.string.isRequired,
+	show: PropTypes.bool.isRequired,
+	setShow: PropTypes.func.isRequired,
+	submit: PropTypes.func.isRequired,
+	error: PropTypes.string.isRequired,
 	sale: PropTypes.object,
 };

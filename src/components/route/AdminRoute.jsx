@@ -15,7 +15,7 @@ export default function AdminRoute({ validateCookie, logout }) {
 			<div className="main-panel">
 				<TopNav logout={logout} />
 				<div className="content">
-					{appState.isLoading ? <div className="loader" /> : null}
+					{appState.isLoading && <div className="loader" />}
 					<Switch>
 						{adminRoutes.map((value, index) => {
 							return value.private ? (
@@ -40,6 +40,6 @@ export default function AdminRoute({ validateCookie, logout }) {
 }
 
 AdminRoute.propTypes = {
-	validateCookie: PropTypes.func,
-	logout: PropTypes.func,
+	validateCookie: PropTypes.func.isRequired,
+	logout: PropTypes.func.isRequired,
 };

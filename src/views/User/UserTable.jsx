@@ -128,7 +128,7 @@ export default function UserTable() {
 			<CustomReactTable
 				data={useMemo(() => data, [data])}
 				columns={columns}
-				hiddenColumns={['id']}
+				// hiddenColumns={['id']}
 			/>
 		</>
 	);

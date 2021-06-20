@@ -104,11 +104,11 @@ export default function CustomPagination({
 }
 
 CustomPagination.propTypes = {
-	gotoPage: PropTypes.func,
-	canPreviousPage: PropTypes.bool,
-	previousPage: PropTypes.func,
-	nextPage: PropTypes.func,
-	canNextPage: PropTypes.bool,
-	pageCount: PropTypes.number,
-	pageIndex: PropTypes.number,
+	gotoPage: PropTypes.func.isRequired,
+	canPreviousPage: PropTypes.bool.isRequired,
+	previousPage: PropTypes.func.isRequired,
+	nextPage: PropTypes.func.isRequired,
+	canNextPage: PropTypes.bool.isRequired,
+	pageCount: PropTypes.number.isRequired,
+	pageIndex: PropTypes.number.isRequired,
 };

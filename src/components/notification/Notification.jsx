@@ -60,7 +60,7 @@ export default function Notification({ noti }) {
 }
 
 Notification.propTypes = {
-	noti: PropTypes.object,
+	noti: PropTypes.object.isRequired,
 	text: PropTypes.string,
 	type: PropTypes.string,
 	icon: PropTypes.string,

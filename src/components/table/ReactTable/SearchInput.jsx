@@ -40,5 +40,5 @@ export default function SearchInput({ globalFilter, setGlobalFilter }) {
 
 SearchInput.propTypes = {
 	globalFilter: PropTypes.string,
-	setGlobalFilter: PropTypes.func,
+	setGlobalFilter: PropTypes.func.isRequired,
 };

@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 /**
  * Combine all the context
  * @param {array} contexts array of context
@@ -12,3 +14,9 @@ export default function CombinedContext({ contexts, children }) {
 		return <Context.Provider value={context.value}>{accumulate}</Context.Provider>;
 	}, children);
 }
+
+CombinedContext.propTypes = {
+	contexts: PropTypes.array.isRequired,
+	children: PropTypes.element.isRequired,
+};
+

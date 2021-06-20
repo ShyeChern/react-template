@@ -24,7 +24,7 @@ export default function EditUserModal({ show, setShow, user, editUser, error }) 
 					<Modal.Title className="m-0">Edit User</Modal.Title>
 				</Modal.Header>
 				<Modal.Body style={{ alignItems: 'center' }}>
-					{error ? <p className="text-danger">{error}</p> : null}
+					{error && <p className="text-danger">{error}</p>}
 					<Form.Group as={Row} controlId="name">
 						<Form.Label column md={2} xs={12}>
 							Name
@@ -74,9 +74,9 @@ export default function EditUserModal({ show, setShow, user, editUser, error }) 
 }
 
 EditUserModal.propTypes = {
-	show: PropTypes.bool,
-	setShow: PropTypes.func,
-	user: PropTypes.object,
-	editUser: PropTypes.func,
-	error: PropTypes.string,
+	show: PropTypes.bool.isRequired,
+	setShow: PropTypes.func.isRequired,
+	user: PropTypes.object.isRequired,
+	editUser: PropTypes.func.isRequired,
+	error: PropTypes.string.isRequired,
 };

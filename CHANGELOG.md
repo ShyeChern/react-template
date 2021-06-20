@@ -1,4 +1,11 @@
 # CHANGELOG
+## v1.0.3 (2021-06-19)
+### Misc
+* Add isRequired in PropType
+* Add withCredentials in axios
+* Change 127.0.0.1 to localhost for cookies in local
+* Refactor code
+
 ## v1.0.2 (2021-06-09)
 ### Misc
 * Remove unused css file

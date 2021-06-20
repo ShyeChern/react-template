@@ -18,6 +18,7 @@ This project was created using [Create React App](https://create-react-app.dev/)
 
 1. Clone this repo
 2. Run npm install
+3. Update .env variables _(use localhost instead of 127.0.0.1 for cookie testing)_
 3. Run npm start
 
 **_To create a production bundle, run `npm run build`_**\

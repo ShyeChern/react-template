@@ -11,7 +11,7 @@ import Pagination from 'components/table/ReactTable/Pagination';
  * Other components is separated with the main function to avoid re-render issue
  * eg: avoid re-render on search input keyup
  * @param {array} columns columns of Table
- * @param {array} data data of Table
+ * @param {array or function} data data of Table
  * @returns Table
  */
 
@@ -60,13 +60,13 @@ export default function CustomReactTable({ columns, data, hiddenColumns = [] }) 
 					))}
 				</thead>
 				<tbody {...getTableBodyProps()}>
-					{data.length === 0 ? (
+					{data.length === 0 && (
 						<tr>
 							<td colSpan={columns.length} style={{ textAlign: 'center', fontStyle: 'italic' }}>
 								Empty Data
 							</td>
 						</tr>
-					) : null}
+					)}
 					{page.map((row, index) => {
 						prepareRow(row);
 						return (
@@ -97,8 +97,7 @@ export default function CustomReactTable({ columns, data, hiddenColumns = [] }) 
 }
 
 CustomReactTable.propTypes = {
-	columns: PropTypes.array,
-	data: PropTypes.array,
+	columns: PropTypes.array.isRequired,
+	data: PropTypes.any.isRequired,
 	hiddenColumns: PropTypes.array,
 };
-

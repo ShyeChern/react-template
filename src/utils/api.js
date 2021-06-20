@@ -20,6 +20,7 @@ export const GET = (url, params = {}) => {
 		method: 'GET',
 		headers,
 		params,
+		withCredentials: true,
 	})
 		.then((res) => {
 			return res.data;
@@ -36,6 +37,7 @@ export const POST = (url, data, extraHeader = {}) => {
 		method: 'POST',
 		headers,
 		data,
+		withCredentials: true,
 	})
 		.then((res) => {
 			return res.data;
@@ -52,6 +54,7 @@ export const PUT = (url, data, extraHeader = {}) => {
 		method: 'PUT',
 		headers,
 		data,
+		withCredentials: true,
 	})
 		.then((res) => {
 			return res.data;
@@ -66,6 +69,7 @@ export const DELETE = (url, data = {}) => {
 		method: 'DELETE',
 		headers,
 		data,
+		withCredentials: true,
 	})
 		.then((res) => {
 			return res.data;
