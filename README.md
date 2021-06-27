@@ -2,6 +2,8 @@
 
 This is the sample react file structure template for myself. It contains some code for me to refer when needed.
 
+[Changelog](CHANGELOG.md)
+
 ## Sample code including but not limited to the following package
 
 - React Router
@@ -19,13 +21,10 @@ This project was created using [Create React App](https://create-react-app.dev/)
 1. Clone this repo
 2. Run npm install
 3. Update .env variables _(use localhost instead of 127.0.0.1 for cookie testing)_
-3. Run npm start
+4. Run npm start
 
 **_To create a production bundle, run `npm run build`_**\
 **_To run production in local, run `serve -s build` and `npm install -g serve` if you don't have serve_**
-
-## Changelog
-[Changelog](CHANGELOG.md)
 
 ## Todo
 
