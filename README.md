@@ -24,11 +24,13 @@ This project was created using [Create React App](https://create-react-app.dev/)
 **_To create a production bundle, run `npm run build`_**\
 **_To run production in local, run `serve -s build` and `npm install -g serve` if you don't have serve_**
 
+## Changelog
+[Changelog](CHANGELOG.md)
+
 ## Todo
 
-- `Cookie thing check token and update refresh token`
 - `cookie show modal before cookie timeout`
 - `logout sometimes will auto login again`
-- `More lazy loading?`
+- https://stackoverflow.com/questions/7653483/github-relative-link-in-markdown-file/7658676
 
 Feel free to contact me at chern-97@hotmail.com
