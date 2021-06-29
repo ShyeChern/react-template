@@ -1,6 +1,6 @@
 # React Template
 
-This is the sample react file structure template for myself. It contains some code for me to refer when needed.
+This is the sample react file structure template for myself. It contains some code for me to refer when needed. It is hosted under https://react.shyechern.com/. Feel free to look into it.
 
 [Changelog](CHANGELOG.md)
 
@@ -30,6 +30,5 @@ This project was created using [Create React App](https://create-react-app.dev/)
 
 - `cookie show modal before cookie timeout`
 - `logout sometimes will auto login again`
-- https://stackoverflow.com/questions/7653483/github-relative-link-in-markdown-file/7658676
 
 Feel free to contact me at chern-97@hotmail.com
