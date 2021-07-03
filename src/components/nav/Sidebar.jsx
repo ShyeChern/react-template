@@ -17,7 +17,8 @@ export default function Sidebar() {
 			: 'nav-link';
 	};
 
-	const toggleMenu = (menu) => {
+	const toggleMenu = (e, menu) => {
+		e.preventDefault();
 		setCollapseMenu(menu === collapseMenu ? '' : menu);
 	};
 
@@ -38,7 +39,11 @@ export default function Sidebar() {
 						if (value.expandable) {
 							return (
 								<li key={index}>
-									<a href="#" className={activeMenu(index)} onClick={() => toggleMenu(value.name)}>
+									<a
+										href="#"
+										className={activeMenu(index)}
+										onClick={(e) => toggleMenu(e, value.name)}
+									>
 										<i className={value.icon} />
 										<p>{value.name}</p>
 										<i
