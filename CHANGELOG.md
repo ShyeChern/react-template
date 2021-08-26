@@ -1,4 +1,8 @@
 # CHANGELOG
+## v1.0.4 (2021-08-26)
+### Misc
+* Fix typo 
+
 ## v1.0.3 (2021-06-19)
 ### Misc
 * Add isRequired in PropType
