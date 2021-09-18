@@ -1,4 +1,9 @@
 # CHANGELOG
+
+## v1.0.6 (2021-09-18)
+### Feature
+* Add a maintenance page
+
 ## v1.0.5 (2021-08-26)
 ### Misc
 * Fix typo 
