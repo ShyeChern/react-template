@@ -1,0 +1,78 @@
+.react-table {
+	background-color: $white;
+	margin-bottom: 0;
+	border-style: hidden;
+
+	td {
+		vertical-align: middle;
+		align-items: center;
+	}
+
+	.sticky-left {
+		position: sticky;
+		left: 0;
+		top: 0;
+		z-index: 1;
+		background-color: $white;
+	}
+
+	.sticky-right {
+		position: sticky;
+		right: 0;
+		top: 0;
+		z-index: 1;
+		background-color: $white;
+	}
+
+	.shadow-right {
+		filter: drop-shadow(10px 0 5px $gray-300);
+	}
+
+	.shadow-left {
+		filter: drop-shadow(-10px 0 5px $gray-300);
+	}
+}
+
+// handle border outer border with radius
+.react-table-wrapper {
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+	border: 0.5px solid $gray-500;
+	border-radius: 10px;
+	margin-top: 20px;
+	margin-bottom: 1rem;
+
+	&::-webkit-scrollbar {
+		width: 5px;
+	}
+
+	&::-webkit-scrollbar-track {
+		box-shadow: $box-shadow-lg;
+		border-radius: 7px;
+		background: $gray-300;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background: $gray-500;
+		border-radius: 7px;
+	}
+
+	// $scrollMargins: 150, 300; just add with comma if there is other length
+	$leftScrollMargins: 300;
+	@each $scrollMargin in $leftScrollMargins {
+		&.scroll-left-#{$scrollMargin} {
+			&::-webkit-scrollbar-track {
+				margin-left: $scrollMargin + px;
+			}
+		}
+	}
+
+	$rightScrollMargins: 100;
+	@each $scrollMargin in $rightScrollMargins {
+		&.scroll-right-#{$scrollMargin} {
+			&::-webkit-scrollbar-track {
+				margin-right: $scrollMargin + px;
+			}
+		}
+	}
+}

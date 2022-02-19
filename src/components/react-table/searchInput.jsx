@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useAsyncDebounce } from 'react-table';
+import { Form } from 'react-bootstrap';
 
 /**
  * Search Input
@@ -22,18 +23,12 @@ export default function SearchInput({ globalFilter, setGlobalFilter }) {
 
 	return (
 		<div className="d-flex align-items-center flex-wrap">
-			<label className="m-0">Search&nbsp;</label>
-			<div className="d-flex">
-				<input
-					type="text"
-					placeholder="Search here"
-					value={value}
-					onChange={(e) => changeValue(e.target.value)}
-				/>
-				<button className="btn btn-sm btn-primary" onClick={() => changeValue('')}>
-					Reset
-				</button>
-			</div>
+			<Form.Control
+				type="search"
+				placeholder="Search..."
+				value={value}
+				onChange={(e) => changeValue(e.target.value)}
+			/>
 		</div>
 	);
 }

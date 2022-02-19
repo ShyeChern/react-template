@@ -1,0 +1,23 @@
+// colors
+$primary: rgb(170, 35, 248);
+
+// fonts
+$font-size-base: 1rem;
+$h1-font-size: $font-size-base * 2.7;
+
+// button active and focus shadow
+$btn-focus-box-shadow: none !important;
+$btn-active-box-shadow: none !important;
+
+// table
+$table-cell-padding-x: 0.75rem;
+
+// import below to allow overwrite in top
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/mixins';
+@import 'bootstrap/scss/variables';
+
+$custom-theme-colors: (
+	'white': $white,
+);
+$theme-colors: map-merge($theme-colors, $custom-theme-colors);

@@ -1,5 +1,5 @@
 import React from 'react';
-import SaleTable from 'views/Sale/SaleTable';
+import SaleTable from 'views/sale/saleTable';
 
 export default function Sale() {
 	return (

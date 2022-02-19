@@ -14,11 +14,11 @@ import { Alert } from 'react-bootstrap';
 export function useNoti() {
 	const [noti, setNoti] = useState({});
 
-	const Noti = (text, type = 'success', icon = 'nc-icon nc-alien-33') => {
+	const show = (text, type = 'success', icon = 'nc-icon nc-alien-33') => {
 		setNoti({ text, type, icon });
 	};
 
-	return { Noti, noti };
+	return { show, noti };
 }
 
 // Component
@@ -47,7 +47,7 @@ export default function Notification({ noti }) {
 		<>
 			<Alert
 				variant={type}
-				className="alert-with-icon alert-noti"
+				className="alert-with-icon alert-noti ml-3"
 				show={show}
 				onClose={() => setShow(false)}
 				dismissible={true}

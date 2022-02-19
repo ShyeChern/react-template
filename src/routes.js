@@ -1,12 +1,12 @@
 import { lazy } from 'react';
 // Lazy loading UI component
-const Dashboard = lazy(() => import('views/Dashboard/Dashboard.jsx'));
-const User = lazy(() => import('views/User/User.jsx'));
-const Sale = lazy(() => import('views/Sale/Sale.jsx'));
-const Login = lazy(() => import('views/Login/Login.jsx'));
-const ExpandOne = lazy(() => import('views/ExpandOne/ExpandOne.jsx'));
-const ExpandTwo = lazy(() => import('views/ExpandTwo/ExpandTwo.jsx'));
-const NotFound = lazy(() => import('views/Error/NotFound.jsx'));
+const Dashboard = lazy(() => import('views/dashboard'));
+const User = lazy(() => import('views/user'));
+const Sale = lazy(() => import('views/sale'));
+const Login = lazy(() => import('views/login'));
+const ExpandOne = lazy(() => import('views/expandOne'));
+const ExpandTwo = lazy(() => import('views/expandTwo'));
+const NotFound = lazy(() => import('views/error/notFound'));
 
 /**
  * Normal Route

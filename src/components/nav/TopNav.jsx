@@ -2,13 +2,13 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
 import { Navbar, Container, Nav, Dropdown, Button } from 'react-bootstrap';
-import { appContext } from 'components/hooks/app';
+import { app } from 'components/hooks';
 import { adminRoutes } from 'routes';
 import { constant } from 'utils/constant';
 
 export default function TopNav({ logout }) {
 	const { pathname } = useLocation();
-	const { appState, dispatchApp } = useContext(appContext);
+	const { appState, dispatchApp } = useContext(app.context);
 
 	/**
 	 * Toggle the sidebar and create a div in body

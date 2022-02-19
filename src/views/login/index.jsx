@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { appContext } from 'components/hooks/app';
+import { app } from 'components/hooks';
 import { InputGroup, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { constant } from 'utils/constant';
@@ -7,7 +7,7 @@ import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
 export default function Login() {
-	const { appState, dispatchApp } = useContext(appContext);
+	const { appState, dispatchApp } = useContext(app.context);
 	const [error, setError] = useState('');
 	const {
 		register,

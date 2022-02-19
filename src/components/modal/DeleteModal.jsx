@@ -1,6 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Modal } from 'react-bootstrap';
+
+// Hook
+export function useDeleteModal() {
+	const [show, setShow] = useState(false);
+	const [title, setTitle] = useState('Delete Modal');
+	const [description, setDescription] = useState('Confirm to delete item?');
+	const [deleteFunction, setDeleteFunction] = useState(() => {});
+
+	const init = ({ title, description, deleteFunction }) => {
+		setTitle(title);
+		setDescription(description);
+		setDeleteFunction(() => deleteFunction);
+	};
+	return {
+		show,
+		setShow,
+		title,
+		description,
+		setDescription,
+		deleteFunction,
+		init,
+	};
+}
 
 /**
  * Reusable Delete Modal

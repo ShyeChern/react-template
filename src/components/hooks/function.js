@@ -2,18 +2,15 @@ import { createContext } from 'react';
 import { constant } from 'utils/constant';
 
 export const initialState = {
-	isLoading: false,
-	isLogin: false,
+	notification: () => {},
 };
 
 export const reducer = (prevState, action) => {
 	switch (action.type) {
-		case constant.SET_LOADING:
-			return { ...prevState, isLoading: action.isLoading };
-		case constant.SET_LOGIN:
-			return { ...prevState, isLogin: action.isLogin };
+		case constant.SET_NOTIFICATION:
+			return { ...prevState, notification: action.notification };
 		default:
-			throw new Error('Invalid app action');
+			throw new Error('Invalid function action');
 	}
 };
 

@@ -1,14 +1,14 @@
 import React, { useContext } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import PrivateRoute from 'components/route/PrivateRoute';
-import Sidebar from 'components/nav/Sidebar';
-import TopNav from 'components/nav/TopNav';
+import PrivateRoute from 'components/route/privateRoute';
+import Sidebar from 'components/nav/sidebar';
+import TopNav from 'components/nav/topNav';
 import { adminRoutes } from 'routes';
-import { appContext } from 'components/hooks/app';
+import { app } from 'components/hooks';
 import PropTypes from 'prop-types';
 
 export default function AdminRoute({ validateCookie, logout }) {
-	const { appState } = useContext(appContext);
+	const { appState } = useContext(app.context);
 	return (
 		<div className="wrapper">
 			<Sidebar />

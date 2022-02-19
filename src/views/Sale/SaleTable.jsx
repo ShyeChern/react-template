@@ -1,24 +1,23 @@
-import React, { useState, useContext } from 'react';
-import { appContext } from 'components/hooks/app';
-import CustomMaterialTable from 'components/table/CustomMaterialTable';
-import DeleteModal from 'components/modal/DeleteModal';
-import Notification, { useNoti } from 'components/notification/Notification';
-import SaleModal from 'views/Sale/SaleModal';
-import { GET, POST } from 'utils/api';
+/* eslint-disable react/prop-types */
+import React, { useState, useEffect, useContext } from 'react';
+import { app, func } from 'components/hooks';
+import CustomReactTable, { useReactTable } from 'components/react-table';
+import DeleteModal, { useDeleteModal } from 'components/modal/deleteModal';
+import SaleModal from 'views/sale/saleModal';
+import { POST } from 'utils/api';
 import { convertFormData } from 'utils/function';
 import { constant } from 'utils/constant';
 
 export default function SaleTable() {
-	const { dispatchApp } = useContext(appContext);
-	const { Noti, ...rest } = useNoti();
-	const [showDeleteModal, setShowDeleteModal] = useState(false);
+	const { dispatchApp } = useContext(app.context);
+	const { funcState } = useContext(func.context);
+	const deleteModal = useDeleteModal();
+	const reactTable = useReactTable();
 	const [showAddModal, setShowAddModal] = useState(false);
 	const [showEditModal, setShowEditModal] = useState(false);
 	const [selectedSale, setSelectedSale] = useState({});
 	const [error, setError] = useState('');
-
-	// Material table data props
-	const data = [
+	const [data, setData] = useState([
 		{
 			id: 1,
 			userId: 2,
@@ -35,33 +34,18 @@ export default function SaleTable() {
 			saleDate: '2021-03-04T16:00:00.000Z',
 			attachment: null,
 		},
-	];
+	]);
 
-	// Material table data props (remote)
-	// eslint-disable-next-line no-unused-vars
-	const getSaleData = async (query) => {
-		let params = {
-			page: query.page + 1,
-		};
-		if (query.search) {
-			params.packageName = query.search;
-		}
-		return GET('v1/sales', params)
-			.then((res) => {
-				return {
-					data: res.data.row,
-					page: query.page,
-					totalCount: parseInt(res.data.totalRow),
-				};
-			})
-			.catch((err) => alert(err.message));
-	};
-
-	// delete sale function
-	const deleteSale = () => {
-		Noti('Delete sale successfully');
-		setShowDeleteModal(false);
-	};
+	useEffect(() => {
+		deleteModal.init({
+			title: 'Delete Sale',
+			description: `Confirm to delete sale ${selectedSale.id}?`,
+			deleteFunction: () => {
+				funcState.notification('Delete sale successfully');
+				deleteModal.setShow(false);
+			},
+		});
+	}, [selectedSale]);
 
 	const addSale = async (data, reset) => {
 		if (Math.random() < 0.5) {
@@ -90,7 +74,7 @@ export default function SaleTable() {
 			reset();
 			setError('');
 			setShowAddModal(false);
-			Noti('Add sale successfully');
+			funcState.notification('Add sale successfully');
 		} else {
 			setError('Randomize true false');
 			return false;
@@ -102,73 +86,93 @@ export default function SaleTable() {
 		reset();
 		setError('');
 		setShowEditModal(false);
-		Noti('Edit sale successfully');
+		funcState.notification('Edit sale successfully');
 	};
 
-	// Material table actions props
-	const actions = [
-		{
-			icon: 'edit',
-			tooltip: 'Actions',
-			iconProps: {
-				fontSize: 'small',
-				color: 'action',
+	useEffect(() => {
+		reactTable.init(columns, data, {
+			...reactTable.options,
+			title: 'Sale Table',
+			addBtn: {
+				text: 'Add Sale',
+				func: () => {
+					setShowAddModal(true);
+				},
 			},
-			onClick: (event, rowData) => {
-				setSelectedSale(rowData);
-				setShowEditModal(true);
+			exportBtn: () => {
+				console.log('export');
 			},
-		},
-		{
-			icon: 'delete',
-			tooltip: 'Actions',
-			iconProps: {
-				fontSize: 'small',
-				color: 'action',
+			filterBtn: () => {
+				console.log('filter');
 			},
-			onClick: (event, rowData) => {
-				setSelectedSale(rowData);
-				setShowDeleteModal(true);
+			resetBtn: () => {
+				console.log('reset');
 			},
-		},
-		{
-			icon: 'add',
-			tooltip: 'Add Sale',
-			isFreeAction: true,
-			onClick: () => {
-				setShowAddModal(true);
-			},
-		},
-	];
+			isSticky: true,
+		});
+	}, [data]);
+
+	useEffect(() => {
+		let mounted = true;
+		async function getSaleData() {
+			setTimeout(() => {
+				if (mounted) {
+					setData([
+						...data,
+						{
+							id: 2,
+							userId: 1,
+							packageName: 'Red',
+							quantity: 1,
+							saleDate: '2021-03-04T16:00:00.000Z',
+							attachment: null,
+						},
+					]);
+					reactTable.setTotalRow(data.length + 1);
+				}
+			}, 2000);
+		}
+
+		getSaleData();
+
+		return () => {
+			mounted = false;
+		};
+	}, [reactTable.pageSize, reactTable.searchInput, reactTable.sortBy]);
 
 	// Material table columns props
 	const columns = [
 		{
-			title: 'Sale ID',
-			searchable: false,
-			field: 'id',
-			hidden: true,
+			header: 'Sale ID',
+			accessor: 'id',
+			className: 'sticky-left',
 		},
 		{
-			title: 'User ID',
-			field: 'userId',
+			header: 'User ID',
+			accessor: 'userId',
+			className: 'sticky-left shadow-right',
 		},
 		{
-			title: 'Package Name',
-			field: 'packageName',
+			header: 'Package Name',
+			accessor: 'packageName',
+			width: 250,
 		},
 		{
-			title: 'Quantity',
-			field: 'quantity',
+			header: 'Quantity',
+			accessor: 'quantity',
 		},
 		{
-			title: 'Sale Date',
-			field: 'saleDate',
+			header: 'Sale Date',
+			accessor: 'saleDate',
+			width: 300,
 		},
 		{
-			title: 'Attachment',
-			field: 'attachment',
-			render: (row) => {
+			header: 'Attachment',
+			accessor: 'attachment',
+			width: 300,
+			disableGlobalFilter: true,
+			disableSortBy: true,
+			Cell: ({ row }) => {
 				return row.attachment ? (
 					<a href={row.attachment} target="_blank" rel="noreferrer">
 						<i className="fa fa-eye fa-lg"></i>
@@ -178,11 +182,42 @@ export default function SaleTable() {
 				);
 			},
 		},
+		{
+			header: 'Actions',
+			accessor: 'actions',
+			disableGlobalFilter: true,
+			disableSortBy: true,
+			className: 'sticky-right shadow-left',
+			width: 100,
+			Cell: ({ row }) => {
+				return (
+					<>
+						<button
+							className="btn btn-icon"
+							onClick={() => {
+								setSelectedSale(row.original);
+								setShowEditModal(true);
+							}}
+						>
+							<i className="far fa-edit"></i>
+						</button>
+						<button
+							className="btn btn-icon"
+							onClick={() => {
+								setSelectedSale(row.original);
+								deleteModal.setShow(true);
+							}}
+						>
+							<i className="far fa-trash-alt"></i>
+						</button>
+					</>
+				);
+			},
+		},
 	];
 
 	return (
 		<>
-			<Notification {...rest} />
 			<SaleModal
 				title={'Add Sale'}
 				show={showAddModal}
@@ -198,14 +233,8 @@ export default function SaleTable() {
 				sale={selectedSale}
 				error={error}
 			/>
-			<DeleteModal
-				show={showDeleteModal}
-				setShow={setShowDeleteModal}
-				deleteFunction={deleteSale}
-				title={'Delete Sale'}
-				description={`Confirm to delete sale ${selectedSale.id}?`}
-			/>
-			<CustomMaterialTable data={data} title={'Sale'} columns={columns} actions={actions} />
+			<DeleteModal {...deleteModal} />
+			<CustomReactTable {...reactTable} />
 		</>
 	);
 }

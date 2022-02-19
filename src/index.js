@@ -7,7 +7,7 @@ import 'assets/scss/light-bootstrap-dashboard-react.scss';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 // Custom Error boundary for whole app and ui
 import { ErrorBoundary } from 'react-error-boundary';
-import WentWrong from 'views/Error/WentWrong.jsx';
+import WentWrong from 'views/error/wentWrong.jsx';
 
 ReactDOM.render(
 	process.env.NODE_ENV === 'production' ? (

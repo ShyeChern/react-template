@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## v1.0.7 (2022-02-19)
+### Feature
+* Revise react table with new functionality
+### Misc
+* Rework on file naming
+* Revise components with custom hooks
+
 ## v1.0.6 (2021-09-18)
 ### Feature
 * Add a maintenance page

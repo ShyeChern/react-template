@@ -3,7 +3,7 @@ import { Bar, Line, Pie } from 'react-chartjs-2';
 import { Card } from 'react-bootstrap';
 import { Chart } from 'chart.js';
 import zoomPlugin from 'chartjs-plugin-zoom';
-import { lineData, pieData, barData, mixedData } from 'views/Dashboard/chartData';
+import { lineData, pieData, barData, mixedData } from 'views/dashboard/chartData';
 import { chartOptions } from 'utils/chart';
 Chart.register(zoomPlugin);
 
