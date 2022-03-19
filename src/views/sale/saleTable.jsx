@@ -1,22 +1,15 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect, useContext } from 'react';
-import { app, func } from 'components/hooks';
+import { func } from 'components/hooks';
 import CustomReactTable, { useReactTable } from 'components/react-table';
 import DeleteModal, { useDeleteModal } from 'components/modal/deleteModal';
-import SaleModal from 'views/sale/saleModal';
-import { POST } from 'utils/api';
-import { convertFormData } from 'utils/function';
-import { constant } from 'utils/constant';
+import SaleModal, { useSaleModal } from 'views/sale/saleModal';
 
 export default function SaleTable() {
-	const { dispatchApp } = useContext(app.context);
 	const { funcState } = useContext(func.context);
 	const deleteModal = useDeleteModal();
+	const saleModal = useSaleModal();
 	const reactTable = useReactTable();
-	const [showAddModal, setShowAddModal] = useState(false);
-	const [showEditModal, setShowEditModal] = useState(false);
-	const [selectedSale, setSelectedSale] = useState({});
-	const [error, setError] = useState('');
 	const [data, setData] = useState([
 		{
 			id: 1,
@@ -39,55 +32,13 @@ export default function SaleTable() {
 	useEffect(() => {
 		deleteModal.init({
 			title: 'Delete Sale',
-			description: `Confirm to delete sale ${selectedSale.id}?`,
+			description: `Confirm to delete sale ${deleteModal.data?.id}?`,
 			deleteFunction: () => {
 				funcState.notification('Delete sale successfully');
 				deleteModal.setShow(false);
 			},
 		});
-	}, [selectedSale]);
-
-	const addSale = async (data, reset) => {
-		if (Math.random() < 0.5) {
-			dispatchApp({ type: constant.SET_LOADING, isLoading: true });
-
-			let saleData = {
-				userId: Math.floor(Math.random() * 10),
-				packageName: data.packageName.value,
-				quantity: data.quantity,
-				saleDate: data.saleDate,
-				attachment: data.attachment[0],
-			};
-
-			console.log(saleData);
-
-			const formData = convertFormData(saleData);
-
-			await POST('v1/sales', formData, { 'Content-Type': 'multipart/form-data' })
-				.then((res) => {
-					console.log(res);
-				})
-				.catch((err) => setError(err.message));
-
-			// move to api call if backend available
-			dispatchApp({ type: constant.SET_LOADING, isLoading: false });
-			reset();
-			setError('');
-			setShowAddModal(false);
-			funcState.notification('Add sale successfully');
-		} else {
-			setError('Randomize true false');
-			return false;
-		}
-	};
-
-	const editSale = (data, reset) => {
-		console.log(data);
-		reset();
-		setError('');
-		setShowEditModal(false);
-		funcState.notification('Edit sale successfully');
-	};
+	}, [deleteModal.data]);
 
 	useEffect(() => {
 		reactTable.init(columns, data, {
@@ -96,7 +47,7 @@ export default function SaleTable() {
 			addBtn: {
 				text: 'Add Sale',
 				func: () => {
-					setShowAddModal(true);
+					saleModal.add();
 				},
 			},
 			exportBtn: () => {
@@ -195,8 +146,7 @@ export default function SaleTable() {
 						<button
 							className="btn btn-icon"
 							onClick={() => {
-								setSelectedSale(row.original);
-								setShowEditModal(true);
+								saleModal.edit(row.original);
 							}}
 						>
 							<i className="far fa-edit"></i>
@@ -204,8 +154,7 @@ export default function SaleTable() {
 						<button
 							className="btn btn-icon"
 							onClick={() => {
-								setSelectedSale(row.original);
-								deleteModal.setShow(true);
+								deleteModal.del(row.original);
 							}}
 						>
 							<i className="far fa-trash-alt"></i>
@@ -218,21 +167,7 @@ export default function SaleTable() {
 
 	return (
 		<>
-			<SaleModal
-				title={'Add Sale'}
-				show={showAddModal}
-				setShow={setShowAddModal}
-				submit={addSale}
-				error={error}
-			/>
-			<SaleModal
-				title={'Edit Sale'}
-				show={showEditModal}
-				setShow={setShowEditModal}
-				submit={editSale}
-				sale={selectedSale}
-				error={error}
-			/>
+			<SaleModal {...saleModal} />
 			<DeleteModal {...deleteModal} />
 			<CustomReactTable {...reactTable} />
 		</>

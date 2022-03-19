@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v1.0.8 (2022-03-19)
+### Misc
+* Revise modals with custom hooks
+
 ## v1.0.7 (2022-02-19)
 ### Feature
 * Revise react table with new functionality

@@ -1,8 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
+import { app, func } from 'components/hooks';
 import { useForm, Controller } from 'react-hook-form';
 import { Modal, InputGroup, Form, Col } from 'react-bootstrap';
+import { POST } from 'utils/api';
+import { convertFormData } from 'utils/function';
+import { constant } from 'utils/constant';
 import Select from 'react-select';
 
 const options = [
@@ -11,7 +15,41 @@ const options = [
 	{ value: 'Yellow', label: 'Yellow' },
 ];
 
-export default function SaleModal({ title, show, setShow, submit, error, sale = {} }) {
+// Hook
+export function useSaleModal() {
+	const [show, setShow] = useState(false);
+	const [title, setTitle] = useState('');
+	const [error, setError] = useState('');
+	const [sale, setSale] = useState({});
+
+	const add = () => {
+		setSale({});
+		setTitle('Add Sale');
+		setError('');
+		setShow(true);
+	};
+
+	const edit = (sale) => {
+		setSale(sale);
+		setTitle('Edit Sale');
+		setError('');
+		setShow(true);
+	};
+
+	return {
+		show,
+		setShow,
+		title,
+		sale,
+		setSale,
+		add,
+		edit,
+		error,
+		setError,
+	};
+}
+
+export default function SaleModal({ title, show, setShow, error, setError, sale }) {
 	const {
 		register,
 		handleSubmit,
@@ -21,8 +59,11 @@ export default function SaleModal({ title, show, setShow, submit, error, sale = 
 		setValue,
 	} = useForm({ defaultValues: { packageName: '' } }); // set controller default value for reset function
 
+	const { dispatchApp } = useContext(app.context);
+	const { funcState } = useContext(func.context);
+
 	useEffect(() => {
-		if (Object.keys(sale).length !== 0) {
+		if (show && Object.keys(sale).length !== 0) {
 			setValue(
 				'packageName',
 				options.find((value) => value.value === sale.packageName),
@@ -30,12 +71,56 @@ export default function SaleModal({ title, show, setShow, submit, error, sale = 
 			);
 			setValue('quantity', sale.quantity, { shouldValidate: true });
 			setValue('saleDate', format(new Date(sale.saleDate), 'yyyy-MM-dd'), { shouldValidate: true });
+		} else {
+			reset();
 		}
-	}, [sale]);
+	}, [show]);
+
+	const addSale = async (data) => {
+		if (Math.random() < 0.5) {
+			dispatchApp({ type: constant.SET_LOADING, isLoading: true });
+
+			let saleData = {
+				userId: Math.floor(Math.random() * 10),
+				packageName: data.packageName.value,
+				quantity: data.quantity,
+				saleDate: data.saleDate,
+				attachment: data.attachment[0],
+			};
+
+			console.log(saleData);
+
+			const formData = convertFormData(saleData);
+
+			await POST('v1/sales', formData, { 'Content-Type': 'multipart/form-data' })
+				.then((res) => {
+					console.log(res);
+				})
+				.catch((err) => setError(err.message));
+
+			// move to api call if backend available
+			dispatchApp({ type: constant.SET_LOADING, isLoading: false });
+			setShow(false);
+			funcState.notification('Add sale successfully');
+		} else {
+			setError('Randomize true false');
+			return false;
+		}
+	};
+
+	const editSale = (data) => {
+		console.log(data);
+		setShow(false);
+		funcState.notification('Edit sale successfully');
+	};
 
 	return (
 		<Modal size="lg" show={show} onHide={() => setShow(false)} backdrop={'static'}>
-			<Form onSubmit={handleSubmit((data) => submit(data, reset))}>
+			<Form
+				onSubmit={handleSubmit((data) =>
+					Object.keys(sale).length !== 0 ? editSale(data) : addSale(data)
+				)}
+			>
 				<Modal.Header closeButton>
 					<Modal.Title className="m-0">{title}</Modal.Title>
 				</Modal.Header>
@@ -87,7 +172,7 @@ export default function SaleModal({ title, show, setShow, submit, error, sale = 
 								<p className="error-message">Quantity is required</p>
 							)}
 							{errors.quantity && errors.quantity.type === 'min' && (
-								<p className="error-message">Quantity must be a valid number</p>
+								<p className="error-message">Quantity must greater than 0</p>
 							)}
 						</Form.Group>
 						<Form.Group as={Col} md={6} controlId="saleDate">
@@ -139,7 +224,7 @@ SaleModal.propTypes = {
 	title: PropTypes.string.isRequired,
 	show: PropTypes.bool.isRequired,
 	setShow: PropTypes.func.isRequired,
-	submit: PropTypes.func.isRequired,
 	error: PropTypes.string.isRequired,
+	setError: PropTypes.func.isRequired,
 	sale: PropTypes.object,
 };

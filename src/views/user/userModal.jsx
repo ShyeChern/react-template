@@ -1,9 +1,33 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import { Modal, Form, Row } from 'react-bootstrap';
+import { app, func } from 'components/hooks';
+import { constant } from 'utils/constant';
 
-export default function EditUserModal({ show, setShow, user, editUser, error }) {
+// Hook
+export function useUserModal() {
+	const [show, setShow] = useState(false);
+	const [error, setError] = useState('');
+	const [user, setUser] = useState({});
+
+	const edit = (user) => {
+		setUser(user);
+		setError('');
+		setShow(true);
+	};
+
+	return {
+		show,
+		setShow,
+		edit,
+		error,
+		setError,
+		user,
+	};
+}
+
+export default function UserModal({ show, setShow, error, setError, user }) {
 	const {
 		register,
 		handleSubmit,
@@ -12,14 +36,34 @@ export default function EditUserModal({ show, setShow, user, editUser, error }) 
 		setValue,
 	} = useForm();
 
+	const { dispatchApp } = useContext(app.context);
+	const { funcState } = useContext(func.context);
+
 	useEffect(() => {
-		setValue('name', user.name, { shouldValidate: true });
-		setValue('age', user.age, { shouldValidate: true });
-	}, [user]);
+		if (show && Object.keys(user).length !== 0) {
+			setValue('name', user.name, { shouldValidate: true });
+			setValue('age', user.age, { shouldValidate: true });
+		} else {
+			reset();
+		}
+	}, [show]);
+
+	const editUser = (data) => {
+		if (Math.random() < 0.5) {
+			console.log(data);
+			dispatchApp({ type: constant.SET_LOADING, isLoading: true });
+			dispatchApp({ type: constant.SET_LOADING, isLoading: false });
+			setShow(false);
+			funcState.notification(`Edit user ${user.name} success`);
+		} else {
+			setError('Randomize true false');
+			return false;
+		}
+	};
 
 	return (
 		<Modal size="lg" show={show} onHide={() => setShow(false)} backdrop={'static'}>
-			<Form onSubmit={handleSubmit((data) => editUser(data, reset))}>
+			<Form onSubmit={handleSubmit((data) => editUser(data))}>
 				<Modal.Header closeButton>
 					<Modal.Title className="m-0">Edit User</Modal.Title>
 				</Modal.Header>
@@ -73,10 +117,10 @@ export default function EditUserModal({ show, setShow, user, editUser, error }) 
 	);
 }
 
-EditUserModal.propTypes = {
+UserModal.propTypes = {
 	show: PropTypes.bool.isRequired,
 	setShow: PropTypes.func.isRequired,
-	user: PropTypes.object.isRequired,
-	editUser: PropTypes.func.isRequired,
 	error: PropTypes.string.isRequired,
+	setError: PropTypes.func.isRequired,
+	user: PropTypes.object.isRequired,
 };

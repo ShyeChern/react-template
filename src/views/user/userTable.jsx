@@ -1,30 +1,26 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect, useContext } from 'react';
-import { app, func } from 'components/hooks';
-import EditUserModal from 'views/user/editUserModal';
+import { func } from 'components/hooks';
+import UserModal, { useUserModal } from 'views/user/userModal';
 import CustomReactTable, { useReactTable } from 'components/react-table';
 import DeleteModal, { useDeleteModal } from 'components/modal/deleteModal';
-import { constant } from 'utils/constant';
 
 export default function UserTable() {
-	const { dispatchApp } = useContext(app.context);
 	const { funcState } = useContext(func.context);
 	const deleteModal = useDeleteModal();
+	const userModal = useUserModal();
 	const reactTable = useReactTable();
-	const [showEditModal, setShowEditModal] = useState(false);
-	const [user, setUser] = useState({});
-	const [error, setError] = useState('');
 
 	useEffect(() => {
 		deleteModal.init({
 			title: 'Delete User',
-			description: `Confirm to delete user ${user.name}?`,
+			description: `Confirm to delete user ${deleteModal.data?.name}?`,
 			deleteFunction: () => {
-				funcState.notification(`Delete user ${user.name} success`);
+				funcState.notification(`Delete user ${deleteModal.data.name} success`);
 				deleteModal.setShow(false);
 			},
 		});
-	}, [user]);
+	}, [deleteModal.data]);
 
 	// eslint-disable-next-line no-unused-vars
 	const [data, setData] = useState([
@@ -47,9 +43,7 @@ export default function UserTable() {
 						<button
 							className="btn btn-warning"
 							onClick={() => {
-								setError('');
-								setUser(row.original);
-								setShowEditModal(true);
+								userModal.edit(row.original);
 							}}
 						>
 							Edit
@@ -57,8 +51,7 @@ export default function UserTable() {
 						<button
 							className="btn btn-danger"
 							onClick={() => {
-								setUser(row.original);
-								deleteModal.setShow(true);
+								deleteModal.del(row.original);
 							}}
 						>
 							Delete
@@ -74,22 +67,6 @@ export default function UserTable() {
 			accessor: 'age',
 		},
 	];
-
-	const editUser = (data, reset) => {
-		if (Math.random() < 0.5) {
-			console.log(data);
-			dispatchApp({ type: constant.SET_LOADING, isLoading: true });
-			dispatchApp({ type: constant.SET_LOADING, isLoading: false });
-			reset();
-			setError('');
-			setShowEditModal(false);
-			setUser({});
-			funcState.notification(`Edit user ${user.name} success`);
-		} else {
-			setError('Randomize true false');
-			return false;
-		}
-	};
 
 	/**
 	 * Check if component is still mounted to prevent memory leak
@@ -131,13 +108,7 @@ export default function UserTable() {
 
 	return (
 		<>
-			<EditUserModal
-				show={showEditModal}
-				setShow={setShowEditModal}
-				user={user}
-				editUser={editUser}
-				error={error}
-			/>
+			<UserModal {...userModal} />
 			<DeleteModal {...deleteModal} />
 			<CustomReactTable {...reactTable} />
 		</>
