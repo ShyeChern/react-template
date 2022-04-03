@@ -4,8 +4,7 @@ import { format } from 'date-fns';
 import { app, func } from 'components/hooks';
 import { useForm, Controller } from 'react-hook-form';
 import { Modal, InputGroup, Form, Col } from 'react-bootstrap';
-import { POST } from 'utils/api';
-import { convertFormData } from 'utils/function';
+import { useAxios } from 'utils/api';
 import { constant } from 'utils/constant';
 import Select from 'react-select';
 
@@ -62,6 +61,8 @@ export default function SaleModal({ title, show, setShow, error, setError, sale 
 	const { dispatchApp } = useContext(app.context);
 	const { funcState } = useContext(func.context);
 
+	const api = useAxios();
+
 	useEffect(() => {
 		if (show && Object.keys(sale).length !== 0) {
 			setValue(
@@ -88,13 +89,11 @@ export default function SaleModal({ title, show, setShow, error, setError, sale 
 				attachment: data.attachment[0],
 			};
 
-			console.log(saleData);
-
-			const formData = convertFormData(saleData);
-
-			await POST('v1/sales', formData, { 'Content-Type': 'multipart/form-data' })
-				.then((res) => {
-					console.log(res);
+			await api
+				.post('v1/sales', saleData, {
+					headers: {
+						'Content-Type': 'multipart/form-data',
+					},
 				})
 				.catch((err) => setError(err.message));
 

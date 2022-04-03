@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v1.0.8 (2022-04-03)
+### Feature
+* Add axios interceptor
+
 ## v1.0.8 (2022-03-19)
 ### Misc
 * Revise modals with custom hooks

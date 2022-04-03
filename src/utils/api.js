@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { constant } from 'utils/constant';
 import Cookies from 'universal-cookie';
+import { convertFormData } from 'utils/function';
+
 const apiBaseURL = process.env.REACT_APP_BASE_URL;
 let cookie;
 if (process.env.NODE_ENV === 'production') {
@@ -9,72 +11,46 @@ if (process.env.NODE_ENV === 'production') {
 	cookie =
 		'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTYxOTI1MjU0M30.uqqRy06zb2DYimhsqpf8UsJneoyRhhSmPZzthvU2P2I';
 }
-let headers = {
-	Accept: 'application/json',
-	'Content-Type': 'application/json',
-	Authorization: 'Bearer ' + cookie,
-};
 
-export const GET = (url, params = {}) => {
-	return axios(`${apiBaseURL}${url}`, {
-		method: 'GET',
-		headers,
-		params,
-		withCredentials: true,
-	})
-		.then((res) => {
-			return res.data;
-		})
-		.catch((err) => {
-			throw new Error(err.response.data.message);
-		});
-};
+export const useAxios = () => {
+	const headers = {
+		Accept: 'application/json',
+		'Content-Type': 'application/json',
+		Authorization: 'Bearer ' + cookie,
+	};
 
-// Extra header such as 'Content-Type': 'multipart/form-data'
-export const POST = (url, data, extraHeader = {}) => {
-	headers = { ...headers, ...extraHeader };
-	return axios(`${apiBaseURL}${url}`, {
-		method: 'POST',
+	const instance = axios.create({
+		baseURL: apiBaseURL,
 		headers,
-		data,
-		withCredentials: true,
-	})
-		.then((res) => {
-			return res.data;
-		})
-		.catch((err) => {
-			throw new Error(err.response.data.message);
-		});
-};
+		transformRequest: [
+			(data, headers) => {
+				if (headers['Content-Type'] === 'multipart/form-data') {
+					data = convertFormData(data);
+				}
+				return data;
+			},
+		],
+	});
 
-// Extra header such as 'Content-Type': 'multipart/form-data'
-export const PUT = (url, data, extraHeader = {}) => {
-	headers = { ...headers, ...extraHeader };
-	return axios(`${apiBaseURL}${url}`, {
-		method: 'PUT',
-		headers,
-		data,
-		withCredentials: true,
-	})
-		.then((res) => {
-			return res.data;
-		})
-		.catch((err) => {
-			throw new Error(err.response.data.message);
-		});
-};
+	instance.interceptors.request.use((req) => {
+		// function run before request
+		// do something like check token etc
+		return req;
+	});
 
-export const DELETE = (url, data = {}) => {
-	return axios(`${apiBaseURL}${url}`, {
-		method: 'DELETE',
-		headers,
-		data,
-		withCredentials: true,
-	})
-		.then((res) => {
+	instance.interceptors.response.use(
+		(res) => {
+			// Any response within the range of 2xx trigger this function
+			// Do something with response data
 			return res.data;
-		})
-		.catch((err) => {
-			throw new Error(err.response.data.message);
-		});
+		},
+		(err) => {
+			// Any response falls outside the range of 2xx trigger this function
+			// Do something with response error
+			// err.response.status
+			return Promise.reject(err.response.data);
+		}
+	);
+
+	return instance;
 };
