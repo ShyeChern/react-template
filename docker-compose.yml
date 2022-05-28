@@ -1,0 +1,19 @@
+version: "3.7"
+services:
+  # app:
+  #   image: node:16
+  #   ports:
+  #     - 3000:3000
+  #   working_dir: /app
+  #   restart: always
+  #   command: bash -c 'npm install && npm start'
+  nginx:
+    image: nginx:stable
+    # command: bash -c ''
+    volumes:
+    - ./nginx-templates:/etc/nginx/templates # copy nginx-templates dir in host to container
+    ports:
+    - "3000:3000"
+    environment:
+    - NGINX_HOST=localhost
+    - NGINX_PORT=3000

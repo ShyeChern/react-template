@@ -26,9 +26,13 @@ This project was created using [Create React App](https://create-react-app.dev/)
 **_To create a production bundle, run `npm run build`_**\
 **_To run production in local, run `serve -s build` and `npm install -g serve` if you don't have serve_**
 
+## Running in Docker
+
+1. Create a file named docker-compose.yml and by following the format in docker-compose.yml.example
+2. Run **docker-compose --env-file .env.production up** (Specify your .env file)
+
 ## Todo
 
-- `cookie show modal before cookie timeout`
-- `logout sometimes will auto login again`
+- `show alert before cookie timeout`
 
 Feel free to contact me at chern-97@hotmail.com
