@@ -29,6 +29,7 @@ export const useAxios = () => {
 				}
 				return data;
 			},
+			...axios.defaults.transformRequest,
 		],
 	});
 
