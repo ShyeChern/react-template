@@ -1,14 +1,14 @@
 # CHANGELOG
 
-## v1.0.10 (2022-07-29)
+## v1.0.11 (2022-07-29)
 ### Fix
 * Axios interceptor transform request
 
-## v1.0.9 (2022-05-28)
+## v1.0.10 (2022-05-28)
 ### Misc
 * Added docker compose example
 
-## v1.0.8 (2022-04-03)
+## v1.0.9 (2022-04-03)
 ### Feature
 * Add axios interceptor
 
